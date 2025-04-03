@@ -37,9 +37,6 @@ jobs:
         id: generate-image-tags
         shell: bash
         run: |
-          TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
-          DATE="$(echo ${TIMESTAMP} | cut -d '-' -f 1)"
-          echo "DATE=$DATE" >> $GITHUB_ENV
           VERSION="${{ steps.read-version.outputs.version }}"
           BUILD_TAGS=( "${VERSION}" "${TIMESTAMP}" "${DATE}" )
           echo "alias_tags=${BUILD_TAGS[*]}" >> $GITHUB_OUTPUT
@@ -54,7 +51,7 @@ jobs:
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/cubt85iz/${{ env.IMAGE_NAME }}/main/README.md
             org.opencontainers.image.description=A container image for ${{ env.IMAGE_NAME }}
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            org.opencontainers.image.version=${{ env.DATE }}
+            org.opencontainers.image.version=${{ steps.read-version.outputs.version }}
 
       - name: Build Image
         id: build_image
