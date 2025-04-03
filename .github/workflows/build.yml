@@ -66,7 +66,7 @@ jobs:
           labels: ${{ steps.define-image-metadata.outputs.labels }}
           oci: false
           extra-args: |
-            --build-arg=CUDA=${{ steps.read-cuda.outputs.cuda }}
+            --build-arg=CUDA_TAG=${{ steps.read-cuda.outputs.cuda }}
             --build-arg=RELEASE=${{ steps.read-version.outputs.version }}
 
       - name: Push To GHCR

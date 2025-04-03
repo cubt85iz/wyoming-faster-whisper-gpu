@@ -30,4 +30,4 @@ RUN dnf -y install python3-pip && \
   pip install --no-cache-dir /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl
 
 # Maintain syntax with existing official container (i.e., arguments passed as command)
-ENTRYPOINT [ "/usr/bin/python3", "-m", "wyoming_faster_whisper", "--uri 'tcp://0.0.0.0:10300'", "--data-dir /data", "--download-dir /data" ]
+ENTRYPOINT [ "/usr/bin/python3", "-m", "wyoming_faster_whisper", "--uri", "tcp://0.0.0.0:10300", "--data-dir", "/data", "--download-dir", "/data" ]
