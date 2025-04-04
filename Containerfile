@@ -25,6 +25,10 @@ WORKDIR /
 # Copy wheel package from build stage.
 COPY --from=build /usr/src/wyoming-faster-whisper/dist/wyoming_faster_whisper-${RELEASE}-py3-none-any.whl /
 
+# Override LD_LIBRARY_PATH; otherwise whisper will fail to find them.
+# Existing paths don't exist.
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
+
 # Install wyoming_faster_whisper package.
 RUN apt-get update && apt-get -y install --no-install-recommends python3 python3-pip && \
   pip install --no-cache-dir /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl && \
