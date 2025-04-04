@@ -22,6 +22,8 @@ build:
     --build-arg=RELEASE=${RELEASE} --build-arg=CUDA_TAG=${CUDA_TAG} .
 
 
+# Runs the container image with the supplied arguments.
+[group('Development')]
 run *args:
   #!/usr/bin/env bash
 

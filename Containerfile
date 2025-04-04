@@ -1,12 +1,12 @@
-ARG CUDA_TAG=${CUDA_TAG:-12.8.1-cudnn-runtime-ubi9}
-ARG RELEASE=${RELEASE:-2.4.0}
+ARG CUDA_TAG=${CUDA_TAG:-11.8.0-cudnn8-runtime-ubuntu22.04}
+ARG RELEASE=${RELEASE:-2.2.0}
 
 FROM docker.io/nvidia/cuda:${CUDA_TAG} AS build
 
 ARG RELEASE
 
 # Install prerequisites
-RUN dnf -y install git python3-pip
+RUN apt-get update && apt-get -y install --no-install-recommends git python3 python3-pip python3-venv
 
 # Create build environment & build wheel package.
 WORKDIR /usr/src
@@ -26,8 +26,9 @@ WORKDIR /
 COPY --from=build /usr/src/wyoming-faster-whisper/dist/wyoming_faster_whisper-${RELEASE}-py3-none-any.whl /
 
 # Install wyoming_faster_whisper package.
-RUN dnf -y install python3-pip && \
-  pip install --no-cache-dir /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl
+RUN apt-get update && apt-get -y install --no-install-recommends python3 python3-pip && \
+  pip install --no-cache-dir /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl && \
+  rm -rf /var/lib/apt/lists/*
 
 # Maintain syntax with existing official container (i.e., arguments passed as command)
 ENTRYPOINT [ "/usr/bin/python3", "-m", "wyoming_faster_whisper", "--uri", "tcp://0.0.0.0:10300", "--data-dir", "/data", "--download-dir", "/data" ]
