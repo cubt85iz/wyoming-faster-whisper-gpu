@@ -16,7 +16,7 @@ After=network-online.target nss-lookup.target
 
 [Container]
 ContainerName=%p
-Image=ghcr.io/cubt85iz/wyoming-faster-whisper-gpu:2.4.0
+Image=ghcr.io/cubt85iz/wyoming-faster-whisper-gpu:2.2.0
 Exec=--model ${MODEL} --language ${LANG} --device cuda
 Volume=${CONTAINER_PATH}/data:/data:Z
 PublishPort=${PORT}:10300
