@@ -31,8 +31,7 @@ ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
 
 # Install wyoming_faster_whisper package.
 RUN apt-get update && apt-get -y install --no-install-recommends python3 python3-pip && \
-  pip install --no-cache-dir /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl && \
-  pip install --force-reinstall ctranslate2==3.24.0 && \
+  pip install --no-cache-dir --break-system-packages /wyoming_faster_whisper-${RELEASE}-py3-none-any.whl && \
   rm -rf /var/lib/apt/lists/*
 
 # Maintain syntax with existing official container (i.e., arguments passed as command)
